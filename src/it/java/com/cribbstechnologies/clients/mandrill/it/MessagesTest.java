@@ -36,7 +36,7 @@ public class MessagesTest {
 	
 	@BeforeClass
 	public static void beforeClass() {
-		config.setApiKey("a2d9f0f9-5646-4af2-a507-76758c71631b");
+		config.setApiKey("b9fe9170-08f7-4f56-b0d1-e56ce1e426e7");
 		config.setApiVersion("1.0");
 		config.setBaseURL("https://mandrillapp.com/api");
 		request.setConfig(config);
@@ -55,12 +55,12 @@ public class MessagesTest {
 		MandrillMessageRequest mmr = new MandrillMessageRequest();
 		MandrillHtmlMessage message = new MandrillHtmlMessage();
 		Map<String, String> headers = new HashMap<String, String>();
-		message.setFrom_email("jim@cribbstechnologies.com");
-		message.setFrom_name("Big Jimmy");
+		message.setFrom_email("peter.backx@fctr.be");
+		message.setFrom_name("Peter Backx");
 		message.setHeaders(headers);
 		message.setHtml("<html><body><h1>Oh snap!</h1>Guess what I saw?<a href=\"http://www.google.com\">google</a></body></html>");
 		message.setSubject("This is the subject");
-		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Brian Cribbs", "briancribbs@gmail.com"), new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
+		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
 		message.setTo(recipients);
 		message.setTrack_clicks(true);
 		message.setTrack_opens(true);
@@ -81,11 +81,11 @@ public class MessagesTest {
 		MandrillTemplatedMessageRequest request = new MandrillTemplatedMessageRequest();
 		MandrillMessage message = new MandrillMessage();
 		Map<String, String> headers = new HashMap<String, String>();
-		message.setFrom_email("jim@cribbstechnologies.com");
-		message.setFrom_name("Big Jimmy");
+		message.setFrom_email("peter.backx@fctr.be");
+		message.setFrom_name("Peter Backx");
 		message.setHeaders(headers);
 		message.setSubject("This is the subject");
-		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Brian Cribbs", "briancribbs@gmail.com"), new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
+		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
 		message.setTo(recipients);
 		message.setTrack_clicks(true);
 		message.setTrack_opens(true);
