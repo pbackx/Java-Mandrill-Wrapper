@@ -50,31 +50,31 @@ public class MessagesTest {
 		request.setHttpClient(client);
 	}
 	
-	@Test
-	public void testSendMessage() {
-		MandrillMessageRequest mmr = new MandrillMessageRequest();
-		MandrillHtmlMessage message = new MandrillHtmlMessage();
-		Map<String, String> headers = new HashMap<String, String>();
-		message.setFrom_email("peter.backx@fctr.be");
-		message.setFrom_name("Peter Backx");
-		message.setHeaders(headers);
-		message.setHtml("<html><body><h1>Oh snap!</h1>Guess what I saw?<a href=\"http://www.google.com\">google</a></body></html>");
-		message.setSubject("This is the subject");
-		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
-		message.setTo(recipients);
-		message.setTrack_clicks(true);
-		message.setTrack_opens(true);
-		String[] tags = new String[]{"tag1", "tag2", "tag3"};
-		message.setTags(tags);
-		mmr.setMessage(message);
-		
-		try {
-			SendMessageResponse response = messagesRequest.sendMessage(mmr);
-		} catch (RequestFailedException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-	}
+//	@Test
+//	public void testSendMessage() {
+//		MandrillMessageRequest mmr = new MandrillMessageRequest();
+//		MandrillHtmlMessage message = new MandrillHtmlMessage();
+//		Map<String, String> headers = new HashMap<String, String>();
+//		message.setFrom_email("peter.backx@fctr.be");
+//		message.setFrom_name("Peter Backx");
+//		message.setHeaders(headers);
+//		message.setHtml("<html><body><h1>Oh snap!</h1>Guess what I saw?<a href=\"http://www.google.com\">google</a></body></html>");
+//		message.setSubject("This is the subject");
+//		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
+//		message.setTo(recipients);
+//		message.setTrack_clicks(true);
+//		message.setTrack_opens(true);
+//		String[] tags = new String[]{"tag1", "tag2", "tag3"};
+//		message.setTags(tags);
+//		mmr.setMessage(message);
+//		
+//		try {
+//			SendMessageResponse response = messagesRequest.sendMessage(mmr);
+//		} catch (RequestFailedException e) {
+//			e.printStackTrace();
+//			fail(e.getMessage());
+//		}
+//	}
 	
 	@Test
 	public void testSendTemplatedMessage() {
@@ -84,17 +84,15 @@ public class MessagesTest {
 		message.setFrom_email("peter.backx@fctr.be");
 		message.setFrom_name("Peter Backx");
 		message.setHeaders(headers);
-		message.setSubject("This is the subject");
+		message.setSubject("Nieuw wachtwoord voor FCTR.be");
 		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
 		message.setTo(recipients);
 		message.setTrack_clicks(true);
 		message.setTrack_opens(true);
-		String[] tags = new String[]{"tag1", "tag2", "tag3"};
-		message.setTags(tags);
 		request.setMessage(message);
 		List<TemplateContent> content = new ArrayList<TemplateContent>();
 		request.setTemplate_content(content);
-		request.setTemplate_name("template2");
+		request.setTemplate_name("fctr_new_password");
 		
 		try {
 			messagesRequest.sendTemplatedMessage(request);
