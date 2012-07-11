@@ -49,7 +49,7 @@ public class MessagesTest {
 	@Before 
 	public void before() {
 		client = new DefaultHttpClient();
-		request.setHttpClient(client);
+//		request.setHttpClient(client);
 	}
 	
 //	@Test
@@ -94,10 +94,12 @@ public class MessagesTest {
 		request.setMessage(message);
 		List<TemplateContent> content = new ArrayList<TemplateContent>();
 		request.setTemplate_content(content);
-		request.setTemplate_name("fctr_new_password");
+//		request.setTemplate_name("fctr_new_password");
+		request.setTemplate_name("fctr_activation");
 		
         List<MergeVar> globalMergeVars = new ArrayList<MergeVar>();
-        globalMergeVars.add(new MergeVar("NEWPWD", "test"));
+        //globalMergeVars.add(new MergeVar("NEWPWD", "test"));
+        globalMergeVars.add(new MergeVar("ACTURL", "http://www.google.com/"));
         message.setGlobal_merge_vars(globalMergeVars);
 
         try {

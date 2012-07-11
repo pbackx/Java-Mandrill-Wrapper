@@ -41,7 +41,7 @@ public class TemplatesTest {
 	@Before 
 	public void before() {
 		client = new DefaultHttpClient();
-		request.setHttpClient(client);
+//		request.setHttpClient(client);
 	}
 	
 	@Test

@@ -2,8 +2,13 @@ package com.cribbstechnologies.clients.mandrill.request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -25,8 +30,10 @@ import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
  
 public class MandrillRESTRequest {
 	
+	private static final String charset = "UTF-8";
+
+	
 	private MandrillConfiguration config;
-	private HttpClient httpClient;
 	private ObjectMapper objectMapper;
 	
 	public BaseMandrillResponse postRequest(BaseMandrillRequest request, String serviceMethod, Object responseClass) throws RequestFailedException {
@@ -40,16 +47,37 @@ public class MandrillRESTRequest {
 	private BaseMandrillResponse performPostRequest(BaseMandrillRequest request, String serviceMethod, Object responseClass, TypeReference reference) throws RequestFailedException {
 		try {
 			request.setKey(config.getApiKey());
-			HttpPost postRequest = new HttpPost(config.getServiceUrl() + serviceMethod);
 			String postData = getPostData(request);
-			StringEntity input = new StringEntity(postData);
-			input.setContentType("application/json");
-			postRequest.setEntity(input);
 			
-			HttpResponse response = httpClient.execute(postRequest);
+			HttpURLConnection connection = (HttpURLConnection)new URL(config.getServiceUrl() + serviceMethod).openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/json");
+			
+			OutputStream post = null;
+			try {
+				post = connection.getOutputStream();
+				post.write(postData.getBytes(charset));
+			} finally {
+			     if (post != null) try { post.close(); 
+			     } catch (IOException logOrIgnore) { 
+			    	 //TODO
+			     }
+			}
+			InputStream response = connection.getInputStream();
+			// ...
+
+			
+//			HttpPost postRequest = new HttpPost(config.getServiceUrl() + serviceMethod);
+//			StringEntity input = new StringEntity(postData);
+//			input.setContentType("application/json");
+//			postRequest.setEntity(input);
+			
+//			HttpResponse response = httpClient.execute(postRequest);
 			 
 			
-			BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+			BufferedReader br = new BufferedReader(new InputStreamReader(response));
 	 
 			StringBuffer sb = new StringBuffer();
 			String output;
@@ -60,8 +88,8 @@ public class MandrillRESTRequest {
 			}
 	 
 			String responseString = sb.toString();
-			if (response.getStatusLine().getStatusCode() != 200) {
-				throw new RequestFailedException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode() + " " + responseString);
+			if (connection.getResponseCode() != 200) {
+				throw new RequestFailedException("Failed : HTTP error code : " + connection.getResponseCode() + " " + responseString);
 			}
 			
 			//for whatever reason the ping response isn't well-formed
@@ -110,10 +138,6 @@ public class MandrillRESTRequest {
 
 	public void setConfig(MandrillConfiguration config) {
 		this.config = config;
-	}
-
-	public void setHttpClient(HttpClient httpClient) {
-		this.httpClient = httpClient;
 	}
 
 	public void setObjectMapper(ObjectMapper objectMapper) {
