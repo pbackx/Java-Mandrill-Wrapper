@@ -7,6 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cribbstechnologies.clients.mandrill.model.*;
+import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
+import com.cribbstechnologies.clients.mandrill.model.MandrillMessage;
+import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
+import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
+import com.cribbstechnologies.clients.mandrill.model.MandrillTemplatedMessageRequest;
+import com.cribbstechnologies.clients.mandrill.model.MergeVar;
+import com.cribbstechnologies.clients.mandrill.model.TemplateContent;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -15,12 +23,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
-import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
-import com.cribbstechnologies.clients.mandrill.model.MandrillMessage;
-import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
-import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
-import com.cribbstechnologies.clients.mandrill.model.MandrillTemplatedMessageRequest;
-import com.cribbstechnologies.clients.mandrill.model.TemplateContent;
 import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessageResponse;
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
@@ -94,7 +96,11 @@ public class MessagesTest {
 		request.setTemplate_content(content);
 		request.setTemplate_name("fctr_new_password");
 		
-		try {
+        List<MergeVar> globalMergeVars = new ArrayList<MergeVar>();
+        globalMergeVars.add(new MergeVar("NEWPWD", "test"));
+        message.setGlobal_merge_vars(globalMergeVars);
+
+        try {
 			messagesRequest.sendTemplatedMessage(request);
 		} catch (RequestFailedException e) {
 			e.printStackTrace();
