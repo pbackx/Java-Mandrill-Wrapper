@@ -2,19 +2,18 @@ package com.cribbstechnologies.clients.mandrill.it;
 
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cribbstechnologies.clients.mandrill.model.*;
-import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
-import com.cribbstechnologies.clients.mandrill.model.MandrillMessage;
-import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
-import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
-import com.cribbstechnologies.clients.mandrill.model.MandrillTemplatedMessageRequest;
-import com.cribbstechnologies.clients.mandrill.model.MergeVar;
-import com.cribbstechnologies.clients.mandrill.model.TemplateContent;
+
+import org.apache.commons.codec.binary.Base64OutputStream;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,6 +25,7 @@ import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessageResponse;
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
+import com.cribbstechnologies.clients.mandrill.util.AttachmentEncoder;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 
 public class MessagesTest {
@@ -79,14 +79,14 @@ public class MessagesTest {
 //	}
 	
 	@Test
-	public void testSendTemplatedMessage() {
+	public void testSendTemplatedMessage() throws Exception {
 		MandrillTemplatedMessageRequest request = new MandrillTemplatedMessageRequest();
 		MandrillMessage message = new MandrillMessage();
 		Map<String, String> headers = new HashMap<String, String>();
 		message.setFrom_email("peter.backx@fctr.be");
 		message.setFrom_name("Peter Backx");
 		message.setHeaders(headers);
-		message.setSubject("Nieuw wachtwoord voor FCTR.be");
+		message.setSubject("Activeren, nu met attachment");
 		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Peter Backx", "peter.backx@gmail.com")}; //, new MandrillRecipient("Brian Cribbs", "brian@cribbstechnologies.com")};
 		message.setTo(recipients);
 		message.setTrack_clicks(true);
@@ -101,7 +101,15 @@ public class MessagesTest {
         //globalMergeVars.add(new MergeVar("NEWPWD", "test"));
         globalMergeVars.add(new MergeVar("ACTURL", "http://www.google.com/"));
         message.setGlobal_merge_vars(globalMergeVars);
-
+        
+        List<Attachment> attachments = new ArrayList<Attachment>();
+        attachments.add(new Attachment(
+        						"application/pdf", 
+        						"factuur.pdf", 
+        						new AttachmentEncoder(getClass().getResourceAsStream("/attachment/invoice.pdf")).getEncodedString()
+        						));
+        message.setAttachments(attachments);
+        
         try {
 			messagesRequest.sendTemplatedMessage(request);
 		} catch (RequestFailedException e) {
