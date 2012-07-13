@@ -61,13 +61,11 @@ public class MandrillRESTRequest {
 				post.write(postData.getBytes(charset));
 			} finally {
 			     if (post != null) try { post.close(); 
-			     } catch (IOException logOrIgnore) { 
-			    	 //TODO
+			     } catch (IOException e) { 
+			    	 throw new RuntimeException(e);
 			     }
 			}
 			InputStream response = connection.getInputStream();
-			// ...
-
 			
 //			HttpPost postRequest = new HttpPost(config.getServiceUrl() + serviceMethod);
 //			StringEntity input = new StringEntity(postData);
