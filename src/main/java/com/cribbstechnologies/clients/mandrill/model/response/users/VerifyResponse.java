@@ -1,7 +1,10 @@
 package com.cribbstechnologies.clients.mandrill.model.response.users;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.cribbstechnologies.clients.mandrill.model.response.BaseMandrillResponse;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class VerifyResponse extends BaseMandrillResponse {
 	
 	String domain;
