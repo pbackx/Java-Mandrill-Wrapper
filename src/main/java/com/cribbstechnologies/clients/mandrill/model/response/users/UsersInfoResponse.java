@@ -1,8 +1,11 @@
 package com.cribbstechnologies.clients.mandrill.model.response.users;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.cribbstechnologies.clients.mandrill.model.response.BaseMandrillResponse;
 import com.cribbstechnologies.clients.mandrill.model.response.StatsResponseMap;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class UsersInfoResponse extends BaseMandrillResponse {
 
 	String username;

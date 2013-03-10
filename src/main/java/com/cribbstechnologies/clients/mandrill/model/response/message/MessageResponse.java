@@ -1,7 +1,10 @@
 package com.cribbstechnologies.clients.mandrill.model.response.message;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.cribbstechnologies.clients.mandrill.model.response.BaseMandrillResponse;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class MessageResponse extends BaseMandrillResponse {
 
 	String email; 

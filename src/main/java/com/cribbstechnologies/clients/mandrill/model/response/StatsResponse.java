@@ -1,5 +1,8 @@
 package com.cribbstechnologies.clients.mandrill.model.response;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class StatsResponse extends BaseMandrillResponse {
 
 	int sent;
