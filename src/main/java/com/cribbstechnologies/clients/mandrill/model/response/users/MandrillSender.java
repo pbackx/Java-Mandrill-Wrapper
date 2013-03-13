@@ -1,7 +1,10 @@
 package com.cribbstechnologies.clients.mandrill.model.response.users;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.cribbstechnologies.clients.mandrill.model.response.StatsResponse;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class MandrillSender extends StatsResponse {
 
 	//{"address":"federico@mailchimp.com","created_at":"2012-01-09 15:29:19","is_enabled":true}
