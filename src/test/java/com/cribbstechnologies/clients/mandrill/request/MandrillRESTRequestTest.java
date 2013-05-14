@@ -232,6 +232,7 @@ public class MandrillRESTRequestTest {
 		to[0] = new MandrillRecipient("to1", "to1");
 		to[1] = new MandrillRecipient("to2", "to2");
 		mutableMessage.setTo(to);
+		mutableMessage.setBcc_address("bcc@email.com");
 		mutableMessage.setTrack_opens(false);
 		mutableMessage.setTrack_clicks(true);
 		String[] tags = new String[2];

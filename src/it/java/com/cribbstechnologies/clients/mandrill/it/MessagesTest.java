@@ -68,6 +68,7 @@ public class MessagesTest {
 		message.setSubject("This is the subject");
 		MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient(props.getProperty("email.to.name1"), props.getProperty("email.to.address1")), new MandrillRecipient(props.getProperty("email.to.name2"), props.getProperty("email.to.address2"))};
 		message.setTo(recipients);
+		message.setBcc_address(props.getProperty("email.bcc.address"));
 		message.setTrack_clicks(true);
 		message.setTrack_opens(true);
 		String[] tags = new String[]{"tag1", "tag2", "tag3"};
