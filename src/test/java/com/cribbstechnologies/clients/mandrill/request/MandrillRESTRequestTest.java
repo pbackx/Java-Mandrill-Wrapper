@@ -254,6 +254,7 @@ public class MandrillRESTRequestTest {
 		sb.append(",\"subject\":\"Test subject\"");
 		sb.append(",\"from_email\":\"from@email.com\"");
 		sb.append(",\"from_name\":\"From Name\"");
+		sb.append(",\"bcc_address\":\"bcc@email.com\"");
 		sb.append(",\"to\":[{\"email\":\"to1\",\"name\":\"to1\"},{\"email\":\"to2\",\"name\":\"to2\"}]");
 		sb.append(",\"track_opens\":false");
 		sb.append(",\"track_clicks\":true");
